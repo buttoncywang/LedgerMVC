@@ -11,7 +11,9 @@ namespace LedgerMVC.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            /*2017/03/09 改用Parital View的方式呈現(原本使用Child Action)*/
+            var ChargeList = this.GetChargeItems();
+            return View(ChargeList);
         }
 
         [HttpGet]

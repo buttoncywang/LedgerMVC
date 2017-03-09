@@ -238,6 +238,7 @@
     <Content Include="Views\Charge\ChargeMoney.cshtml" />
     <Content Include="Views\Charge\Index.cshtml" />
     <Content Include="Views\Charge\_AddCharge.cshtml" />
+    <Content Include="Views\Charge\_ChargeMoney.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
