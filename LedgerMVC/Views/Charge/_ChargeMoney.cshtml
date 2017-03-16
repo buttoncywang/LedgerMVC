@@ -9,19 +9,41 @@
             <th>類別</th>
             <th>日期</th>
             <th>金額</th>
+            <th>備註</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var chargeItem in Model)
+        @foreach (var chargeItem in Model.AccountBooks)
         {
             <tr>
-                <td>@chargeItem.ChargeRecordId</td>
-                <td>@chargeItem.ChargeType</td>
+                <td>@chargeItem.Id</td>
+                <td>@chargeItem.Categoryyy</td>
                 <!--日期 TO String-->
-                <td>@string.Format("{0:yyyy-M-d}", chargeItem.ChargeDate)</td>
+                <td>@string.Format("{0:yyyy-M-d}", chargeItem.Dateee)</td>
                 <!--Int to Currency String-->
-                <td>@String.Format("{0:C}", chargeItem.ChargePrice)</td>
+                <td>@string.Format("{0:C}", chargeItem.Amounttt)</td>
+                <td>
+                    <textarea cols="50" rows="5">
+                        @chargeItem.Remarkkk
+                    </textarea>
+                </td>
             </tr>
         }
     </tbody>
 </table>
+<!--實作分頁功能-->
+<nav aria-label="Page navigation example">
+    <ul id="LedgerPagnation" class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                if (i == Model.CurrentPageIndex)
+                {
+                <li class="page-item active"><a class="page-link" href="">@i</a></li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link">@i</a></li>
+            }
+        }
+    </ul>
+</nav>
