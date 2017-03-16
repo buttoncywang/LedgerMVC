@@ -1,5 +1,7 @@
-﻿using System;
+﻿using LedgerMVC.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -22,6 +24,11 @@ namespace LedgerMVC.Repository
         public void Dispose()
         {
             Context.Dispose();
+        }
+
+        void IUnitOfWork.Save()
+        {
+            throw new NotImplementedException();
         }
     }
 }
