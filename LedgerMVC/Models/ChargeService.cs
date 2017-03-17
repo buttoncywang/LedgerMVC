@@ -24,15 +24,37 @@ namespace LedgerMVC.Models
         }
 
         /*顯示全部資料(無分頁)*/
-        public IEnumerable<AccountBook> ShowAllRecords()
+        public IEnumerable<ChargeItem> ShowAllRecords()
         {
-            return _accountBookRep.ShowAllRecords();
+            var accountBookRecords= _accountBookRep.ShowAllRecords().ToList();
+            return this.MappingModel(accountBookRecords);
         }
 
         /*依類型搜尋*/
-        public IEnumerable<AccountBook> ShowSearchedRecords(int category)
+        public IEnumerable<ChargeItem> ShowSearchedRecords(int category)
         {
-            return _accountBookRep.ShowSearchedRecords(d => d.Categoryyy == category);
+            var accountBookRecordsBySearch = _accountBookRep.ShowSearchedRecords(d => d.Categoryyy == category).ToList();
+            return this.MappingModel(accountBookRecordsBySearch); ;
+        }
+
+
+        private List<ChargeItem> MappingModel(List<AccountBook> dbRecords) {
+            var modelRecords = new List<ChargeItem>();
+            int sn = 0;
+            foreach (var accountBookRecord in dbRecords)
+            {
+                var chargeItem = new ChargeItem();
+                chargeItem.ChargeDate = accountBookRecord.Dateee;
+                chargeItem.ChargePrice = accountBookRecord.Amounttt;
+                if (accountBookRecord.Categoryyy == 0)
+                    chargeItem.ChargeType = "支出";
+                else
+                    chargeItem.ChargeType = "收入";
+                chargeItem.Memo = accountBookRecord.Remarkkk;
+                chargeItem.ChargeRecordId = ++sn;
+                modelRecords.Add(chargeItem);
+            }
+            return modelRecords;
         }
 
         public AccountBook GetSingleRecord(Guid LedgerItemID)
@@ -44,7 +66,8 @@ namespace LedgerMVC.Models
         {
             int maxRow = 50; //一頁50筆資料
             var chargePageViewModel = new ChargePaginViewModel();
-            chargePageViewModel.AccountBooks = _accountBookRep.ShowPaginationRecords((currentPage - 1) * maxRow, maxRow, d => d.Dateee);
+            var accountBookRecords= _accountBookRep.ShowPaginationRecords((currentPage - 1) * maxRow, maxRow, d => d.Dateee).ToList();
+            chargePageViewModel.ChargeItems = this.MappingModel(accountBookRecords);
             //chargePageViewModel.AccountBooks= _db.AccountBook.OrderBy(d => d.Dateee).Skip((currentPage - 1) * maxRow).Take(maxRow).ToList();
             double PageCount = _accountBookRep.GetRowCount();
             PageCount = PageCount / maxRow;

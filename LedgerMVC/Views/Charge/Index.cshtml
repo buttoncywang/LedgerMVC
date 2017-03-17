@@ -36,16 +36,16 @@
                 success: function (responseData) {
                     $('#ChargeList tbody').empty();
                     var tbodyElement = '';
-                    var ChargeList = responseData.AccountBooks;
+                    var ChargeList = responseData.ChargeItems;
                     var totalPages = responseData.TotalPages;
 
                     for (var i = 0; i < ChargeList.length; i++) {
-                        var date = new Date(parseInt(ChargeList[i]["Dateee"].substr(6)));
-                            tbodyElement += '<tr><td>' + ChargeList[i]["Id"] + '</td>' +
-                                '<td>' + ChargeList[i]["Categoryyy"] + '</td>' +
+                        var date = new Date(parseInt(ChargeList[i]["ChargeDate"].substr(6)));
+                            tbodyElement += '<tr><td>' + ChargeList[i]["ChargeRecordId"] + '</td>' +
+                                '<td>' + ChargeList[i]["ChargeType"] + '</td>' +
                                 '<td>' + date.getFullYear() + "-" + months[date.getMonth()] + "-" + days[date.getDay()] + '</td>' +
-                                '<td>NT$' + (ChargeList[i]["Amounttt"]).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + '</td>' +
-                                '<td><textarea cols="50" rows="5">' + ChargeList[i]["Remarkkk"] + '</textarea></td></tr>';
+                                '<td>NT$' + (ChargeList[i]["ChargePrice"]).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,') + '</td>' +
+                                '<td><textarea cols="50" rows="5">' + ChargeList[i]["Memo"] + '</textarea></td></tr>';
                         }
                     $('#ChargeList tbody').append(tbodyElement);
                     reloadPagination(pageIndex, totalPages);

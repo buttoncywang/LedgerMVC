@@ -13,18 +13,18 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var chargeItem in Model.AccountBooks)
+        @foreach (var chargeItem in Model.ChargeItems)
         {
             <tr>
-                <td>@chargeItem.Id</td>
-                <td>@chargeItem.Categoryyy</td>
+                <td>@chargeItem.ChargeRecordId</td>
+                <td>@chargeItem.ChargeType</td>
                 <!--日期 TO String-->
-                <td>@string.Format("{0:yyyy-M-d}", chargeItem.Dateee)</td>
+                <td>@string.Format("{0:yyyy-M-d}", chargeItem.ChargeDate)</td>
                 <!--Int to Currency String-->
-                <td>@string.Format("{0:C}", chargeItem.Amounttt)</td>
+                <td>@string.Format("{0:C}", chargeItem.ChargePrice)</td>
                 <td>
                     <textarea cols="50" rows="5">
-                        @chargeItem.Remarkkk
+                        @chargeItem.Memo
                     </textarea>
                 </td>
             </tr>
