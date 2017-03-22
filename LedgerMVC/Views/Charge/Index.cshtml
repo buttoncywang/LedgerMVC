@@ -17,6 +17,8 @@
             reloadTable(currentPageIndex);
         });
 
+        $('#chargeDate').datepicker({dateFormat: "yy/mm/dd" });
+
         function reloadTable(pageIndex) {
             /*
                 用於日期轉換用，使用Json.net有格式轉換問題
