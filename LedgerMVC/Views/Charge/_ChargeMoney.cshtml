@@ -2,6 +2,17 @@
 @{
     Layout = "";
 }
+@helper changeChargeTypeTextColor(string chargeType)
+{
+    if (chargeType.Equals("支出"))
+    {
+        <p class="text-danger">@chargeType</p>
+    }
+    else
+    {
+        <p class="text-info">@chargeType</p>
+    }
+}
 <table id="ChargeList" class="table table-striped">
     <thead>
         <tr>
@@ -17,11 +28,12 @@
         {
             <tr>
                 <td>@chargeItem.ChargeRecordId</td>
-                <td>@chargeItem.ChargeType</td>
+                @*<td>@chargeItem.ChargeType</td>*@
+                <td>@changeChargeTypeTextColor(@chargeItem.ChargeType)</td>
                 <!--日期 TO String-->
-                <td>@string.Format("{0:yyyy-M-d}", chargeItem.ChargeDate)</td>
+                <td>@chargeItem.ChargeDate.ToString("yyyy-MM-dd")</td>
                 <!--Int to Currency String-->
-                <td>@string.Format("{0:C}", chargeItem.ChargePrice)</td>
+                <td>NT$ @chargeItem.ChargePrice.ToString("#,###")</td>
                 <td>
                     <textarea cols="50" rows="5">
                         @chargeItem.Memo
