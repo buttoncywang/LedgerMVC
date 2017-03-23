@@ -47,9 +47,9 @@ else
 <nav aria-label="Page navigation example">
     <ul id="LedgerPagnation" class="pagination">
         @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            if (i == Model.CurrentPageIndex)
             {
-                if (i == Model.CurrentPageIndex)
-                {
                 <li class="page-item active"><a class="page-link" href="">@i</a></li>
             }
             else
@@ -59,3 +59,6 @@ else
         }
     </ul>
 </nav>
+@section scripts{
+    @Scripts.Render("~/Scripts/CommScripts.js")
+}
