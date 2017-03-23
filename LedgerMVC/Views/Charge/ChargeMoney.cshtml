@@ -1,6 +1,17 @@
-﻿@model IEnumerable<LedgerMVC.Models.ChargeItem>
+﻿@model LedgerMVC.Models.ChargePaginViewModel
 @{
     Layout = "";
+}
+@helper changeChargeTypeTextColor(string chargeType)
+{
+if (chargeType.Equals("支出"))
+{
+        <p class="text-danger">@chargeType</p>
+}
+else
+{
+        <p class="text-info">@chargeType</p>
+}
 }
 <table id="ChargeList" class="table table-striped">
     <thead>
@@ -9,20 +20,42 @@
             <th>類別</th>
             <th>日期</th>
             <th>金額</th>
+            <th>備註</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var chargeItem in Model)
+        @foreach (var chargeItem in Model.ChargeItems)
         {
             <tr>
                 <td>@chargeItem.ChargeRecordId</td>
-                <td>@chargeItem.ChargeType</td>
+                @*<td>@chargeItem.ChargeType</td>*@
+                <td>@changeChargeTypeTextColor(@chargeItem.ChargeType)</td>
                 <!--日期 TO String-->
-                <td>@string.Format("{0:yyyy-M-d}",chargeItem.ChargeDate)</td>
+                <td>@chargeItem.ChargeDate.ToString("yyyy-MM-dd")</td>
                 <!--Int to Currency String-->
-                <td>@String.Format("{0:C}",chargeItem.ChargePrice)</td>
+                <td>NT$ @chargeItem.ChargePrice.ToString("#,###")</td>
+                <td>
+                    <textarea cols="50" rows="5">
+                        @chargeItem.Memo
+                    </textarea>
+                </td>
             </tr>
         }
     </tbody>
 </table>
-
+<!--實作分頁功能-->
+<nav aria-label="Page navigation example">
+    <ul id="LedgerPagnation" class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                if (i == Model.CurrentPageIndex)
+                {
+                <li class="page-item active"><a class="page-link" href="">@i</a></li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link">@i</a></li>
+            }
+        }
+    </ul>
+</nav>

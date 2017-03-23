@@ -6,9 +6,10 @@
 
 <h2>我的記帳簿</h2>
 @*@Html.Partial("_AddCharge")*@
-@Html.Action("AddCharge")
+@*@Html.Action("AddCharge")*@
 <hr/>
-@Html.Partial("_ChargeMoney",Model)
+@*@Html.Partial("_ChargeMoney",Model)*@
+@Html.Action("ChargeMoney")
 <!--使用ajax的方式取得分頁內容-->
 @section scripts{
     <script type="text/javascript">
@@ -16,13 +17,6 @@
             $('.page-link').click(function() {
                 var currentPageIndex = $(this).text();
                 reloadTable(currentPageIndex);
-            });
-
-            $('#ChargeDate').datepicker({
-                showOtherMonths: true,
-                hideIfNoPrevNext: true,
-                maxDate: "+0d",
-                dateFormat: "yy/mm/dd"
             });
 
             function reloadTable(pageIndex) {
@@ -38,7 +32,7 @@
                 ];
                 $.ajax({
                     type: "GET",
-                    url: './Charge/ShowPagedChargeRecords',
+                    url: './ShowPagedChargeRecords',
                     data: { currentPageIndex: pageIndex },
                     error: function(data) {
                         alert(data);

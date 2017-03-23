@@ -61,7 +61,7 @@ namespace LedgerMVC.Repository
 
         IQueryable<T> IRepository<T>.ShowPaginationRecords(int skipRecords, int takeRecords, Expression<Func<T, DateTime>> orderBy)
         {
-            return ObjectSet.OrderBy(orderBy).Skip(skipRecords).Take(takeRecords);
+            return ObjectSet.OrderByDescending(orderBy).Skip(skipRecords).Take(takeRecords);
         }
 
         IQueryable<T> IRepository<T>.ShowSearchedRecords(Expression<Func<T, bool>> filter)

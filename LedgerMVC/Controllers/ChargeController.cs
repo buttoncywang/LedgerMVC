@@ -21,8 +21,15 @@ namespace LedgerMVC.Controllers
 
         public ActionResult Index()
         {
+            return View();
+        }
+
+
+        public ActionResult ChargeMoney()
+        {
             return View(ShowPagedRecords(1));
         }
+
         /*回傳分頁的資訊(JSON)*/
         public ActionResult ShowPagedChargeRecords(int currentPageIndex)
         {
@@ -36,12 +43,12 @@ namespace LedgerMVC.Controllers
             return chargeList;
         }
 
+        
         public ActionResult AddCharge()
         {
             return View();
         }
 
-        [ChildActionOnly]
         [HttpPost]
         public ActionResult AddCharge(ChargeItem chargeItem)
         {
@@ -50,14 +57,16 @@ namespace LedgerMVC.Controllers
                 if (chargeItem.ChargeDate <= DateTime.Now)
                 {
                     chargeService.AddNewAccountRecord(chargeItem);
-                    return View("AddCharge");
-                    //return Content("新增成功");
+                    return View("ChargeMoney", chargeService.ShowRecordsWithPagination(1));
+
                 }
                 else
-                    return Content("日期不得大於今日");
+                    return View();
             }
-
-            return View();
+            else
+            {
+                return View();
+            }
         }
     }
 }
