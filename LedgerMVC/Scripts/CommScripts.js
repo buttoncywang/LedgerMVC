@@ -39,11 +39,14 @@
                     var date = new Date(parseInt(chargeList[i]["ChargeDate"].substr(6)));
                     tbodyElement += '<tr><td>' +
                         chargeList[i]["ChargeRecordId"] +
-                        '</td>' +
-                        '<td>' +
+                        '</td>';
+                    if (chargeList[i]["ChargeType"] === "支出")
+                        tbodyElement+='<td class="text-danger">' +
                         chargeList[i]["ChargeType"] +
-                        '</td>' +
-                        '<td>' +
+                        '</td>';
+                    else
+                        tbodyElement += '<td class="text-info">' +chargeList[i]["ChargeType"] +'</td>';
+                    tbodyElement+='<td>' +
                         date.getFullYear() +
                         "-" +
                         months[date.getMonth()] +
