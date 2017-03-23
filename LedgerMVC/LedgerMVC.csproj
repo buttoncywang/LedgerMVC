@@ -170,6 +170,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChargeAjaxController.cs" />
     <Compile Include="Controllers\ChargeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -296,10 +297,12 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Charge\ChargeMoney.cshtml" />
     <Content Include="Views\Charge\Index.cshtml" />
-    <Content Include="Views\Charge\_AddCharge.cshtml" />
     <Content Include="Views\Charge\_ChargeMoney.cshtml" />
+    <Content Include="Views\Charge\AddCharge.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\ChargeAjax\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

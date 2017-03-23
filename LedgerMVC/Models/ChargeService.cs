@@ -68,12 +68,25 @@ namespace LedgerMVC.Models
             var chargePageViewModel = new ChargePaginViewModel();
             var accountBookRecords= _accountBookRep.ShowPaginationRecords((currentPage - 1) * maxRow, maxRow, d => d.Dateee).ToList();
             chargePageViewModel.ChargeItems = this.MappingModel(accountBookRecords);
-            //chargePageViewModel.AccountBooks= _db.AccountBook.OrderBy(d => d.Dateee).Skip((currentPage - 1) * maxRow).Take(maxRow).ToList();
             double PageCount = _accountBookRep.GetRowCount();
             PageCount = PageCount / maxRow;
             chargePageViewModel.TotalPages = (int)Math.Ceiling(PageCount);
             chargePageViewModel.CurrentPageIndex = currentPage;
             return chargePageViewModel;
+        }
+
+        public void AddNewAccountRecord(ChargeItem chargeRecord)
+        {
+            var accountBookRecord = new AccountBook()
+            {
+                Id = Guid.NewGuid(),
+                Amounttt = chargeRecord.ChargePrice,
+                Categoryyy = int.Parse(chargeRecord.ChargeType),
+                Dateee = chargeRecord.ChargeDate,
+                Remarkkk = chargeRecord.Memo
+            };
+            _accountBookRep.CreateRecord(accountBookRecord);
+            _accountBookRep.Commit();
         }
     }
 }

@@ -23,6 +23,6 @@ namespace LedgerMVC.Models
         [Required(ErrorMessage = "請選擇日期")]
         public DateTime ChargeDate { get; set; }
 
-        public int ChargeRecordId { get; set; }
+        public int? ChargeRecordId { get; set; }
     }
 }

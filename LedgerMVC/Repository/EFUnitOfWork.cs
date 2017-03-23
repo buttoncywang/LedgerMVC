@@ -28,7 +28,8 @@ namespace LedgerMVC.Repository
 
         void IUnitOfWork.Save()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            Context.SaveChanges();
         }
     }
 }
