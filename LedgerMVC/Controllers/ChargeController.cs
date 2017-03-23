@@ -57,15 +57,15 @@ namespace LedgerMVC.Controllers
                 if (chargeItem.ChargeDate <= DateTime.Now)
                 {
                     chargeService.AddNewAccountRecord(chargeItem);
-                    return View("ChargeMoney", chargeService.ShowRecordsWithPagination(1));
+                    return RedirectToAction("AddCharge");
 
                 }
                 else
-                    return View();
+                    return View(chargeItem);
             }
             else
             {
-                return View();
+                return View(chargeItem);
             }
         }
     }
