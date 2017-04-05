@@ -68,5 +68,10 @@ namespace LedgerMVC.Repository
         {
             return ObjectSet.Where(filter);
         }
+
+        public IQueryable<T> ShowPaginationRecords(Expression<Func<T, DateTime>> orderBy)
+        {
+            return ObjectSet.OrderByDescending(orderBy);
+        }
     }
 }

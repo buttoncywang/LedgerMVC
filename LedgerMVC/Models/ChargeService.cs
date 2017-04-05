@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
+using MvcPaging;
 
 namespace LedgerMVC.Models
 {
@@ -10,6 +12,8 @@ namespace LedgerMVC.Models
     {
         private IRepository<AccountBook> _accountBookRep;
         private IUnitOfWork _unitWork;
+        
+
 
         //private ModelCharge _db;
 
@@ -62,17 +66,11 @@ namespace LedgerMVC.Models
             return _accountBookRep.GetSingleRecord(d => d.Id == LedgerItemID);
         }
 
-        public ChargePaginViewModel ShowRecordsWithPagination(int currentPage)
+        public List<ChargeItem> ShowRecordsWithPagination(int currentPage)
         {
-            int maxRow = 50; //一頁50筆資料
-            var chargePageViewModel = new ChargePaginViewModel();
-            var accountBookRecords= _accountBookRep.ShowPaginationRecords((currentPage - 1) * maxRow, maxRow, d => d.Dateee).ToList();
-            chargePageViewModel.ChargeItems = this.MappingModel(accountBookRecords);
-            double PageCount = _accountBookRep.GetRowCount();
-            PageCount = PageCount / maxRow;
-            chargePageViewModel.TotalPages = (int)Math.Ceiling(PageCount);
-            chargePageViewModel.CurrentPageIndex = currentPage;
-            return chargePageViewModel;
+            var accountBookRecords = _accountBookRep.ShowPaginationRecords(d => d.Dateee).ToList();
+            var ChargeItems = this.MappingModel(accountBookRecords);
+            return ChargeItems;
         }
 
         public void AddNewAccountRecord(ChargeItem chargeRecord)
@@ -86,6 +84,10 @@ namespace LedgerMVC.Models
                 Remarkkk = chargeRecord.Memo
             };
             _accountBookRep.CreateRecord(accountBookRecord);
+        }
+
+        public void SaveChanges()
+        {
             _accountBookRep.Commit();
         }
     }

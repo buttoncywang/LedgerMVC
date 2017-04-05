@@ -18,5 +18,6 @@ namespace LedgerMVC.Repository
         void CreateRecord(T entity);
         void RemoveRecord(T entity);
         void Commit();
+        IQueryable<T> ShowPaginationRecords(Expression<Func<T,DateTime>> orderBy);
     }
 }

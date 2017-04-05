@@ -5,29 +5,29 @@ using System.Web;
 using System.Web.Mvc;
 using LedgerMVC.Models;
 using LedgerMVC.Repository;
+using MvcPaging;
 
 namespace LedgerMVC.Controllers
 {
     public class ChargeController : Controller
     {
-
+        private const int DefaultPageSize = 10;
         private ChargeService chargeService;
-
         public ChargeController()
         {
             var unitOfWork = new EFUnitOfWork();
             chargeService = new ChargeService(unitOfWork);
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int? pageIndex)
         {
             return View();
         }
 
 
-        public ActionResult ChargeMoney()
+        public ActionResult ChargeMoney(int? page)
         {
-            return View(ShowPagedRecords(1));
+            return View(ShowPagedRecords(page));
         }
 
         /*回傳分頁的資訊(JSON)*/
@@ -37,10 +37,11 @@ namespace LedgerMVC.Controllers
         }
 
         /*取得分頁的內容*/
-        private ChargePaginViewModel ShowPagedRecords(int currentPageIndex)
+        private /*ChargePaginViewModel*/IPagedList<ChargeItem> ShowPagedRecords(int? currentPageIndex)
         {
-            var chargeList = chargeService.ShowRecordsWithPagination(currentPageIndex);
-            return chargeList;
+            int pageIndex = currentPageIndex.HasValue ? currentPageIndex.Value - 1 : 0;
+            var chargeList = chargeService.ShowRecordsWithPagination(pageIndex);
+            return chargeList.ToPagedList(pageIndex, DefaultPageSize);
         }
 
         
@@ -57,6 +58,8 @@ namespace LedgerMVC.Controllers
                 if (chargeItem.ChargeDate <= DateTime.Now)
                 {
                     chargeService.AddNewAccountRecord(chargeItem);
+                    //2017/03/24 將Commit改為在action中呼叫
+                    chargeService.SaveChanges();
                     return RedirectToAction("AddCharge");
 
                 }

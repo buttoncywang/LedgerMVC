@@ -1,7 +1,11 @@
-﻿@model LedgerMVC.Models.ChargePaginViewModel
+﻿@using System.Web.Services.Description
+@using MvcPaging
+@*@model LedgerMVC.Models.ChargePaginViewModel*@
+@model IPagedList<LedgerMVC.Models.ChargeItem>
 @{
     Layout = "";
 }
+<link href="~/Content/Site.css" rel="stylesheet" />
 @helper changeChargeTypeTextColor(string chargeType)
 {
 if (chargeType.Equals("支出"))
@@ -24,7 +28,7 @@ else
         </tr>
     </thead>
     <tbody>
-        @foreach (var chargeItem in Model.ChargeItems)
+        @foreach (var chargeItem in Model)
         {
             <tr>
                 <td>@chargeItem.ChargeRecordId</td>
@@ -44,7 +48,16 @@ else
     </tbody>
 </table>
 <!--實作分頁功能-->
-<nav aria-label="Page navigation example">
+<div class="pagination pager">
+    @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
+    Displaying @Model.ItemStart - @Model.ItemEnd of @Model.TotalItemCount item(s)
+</div>
+
+
+
+
+
+@*<nav aria-label="Page navigation example">
     <ul id="LedgerPagnation" class="pagination">
         @for (int i = 1; i <= Model.TotalPages; i++)
         {
@@ -58,7 +71,7 @@ else
             }
         }
     </ul>
-</nav>
-@section scripts{
+</nav>*@
+@*@section scripts{
     @Scripts.Render("~/Scripts/CommScripts.js")
-}
+}*@
