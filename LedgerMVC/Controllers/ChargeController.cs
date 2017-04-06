@@ -44,12 +44,12 @@ namespace LedgerMVC.Controllers
             return chargeList.ToPagedList(pageIndex, DefaultPageSize);
         }
 
-        
+        [Authorize(Roles = "Normal_User,Admin_User")]
         public ActionResult AddCharge()
         {
             return View();
         }
-
+        [Authorize(Roles = "Normal_User,Admin_User")]
         [HttpPost]
         public ActionResult AddCharge(ChargeItem chargeItem)
         {

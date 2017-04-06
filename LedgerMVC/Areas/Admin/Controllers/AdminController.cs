@@ -9,6 +9,7 @@ using LedgerMVC.Repository;
 
 namespace LedgerMVC.Areas.Admin.Controllers
 {
+    [Authorize(Roles= "Admin_User")]
     public class AdminController : Controller
     {
         private ChargeService chargeService;
@@ -24,6 +25,18 @@ namespace LedgerMVC.Areas.Admin.Controllers
         {
             int pageIndex = page.HasValue ? page.Value - 1 : 0;
             return View(this.ShowPageRecords(pageIndex));
+        }
+
+        [HttpPut]
+        public ActionResult Index(ChargeItem updateChargeItem)
+        {
+            return null;
+        }
+
+        [HttpDelete]
+        public ActionResult Index(Guid id)
+        {
+            return null;
         }
 
         private IPagedList<ChargeItem> ShowPageRecords(int currentPageIndex)
