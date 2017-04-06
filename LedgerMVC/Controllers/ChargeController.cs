@@ -19,9 +19,9 @@ namespace LedgerMVC.Controllers
             chargeService = new ChargeService(unitOfWork);
         }
 
-        public ActionResult Index(int? pageIndex)
+        public ActionResult Index(int? page)
         {
-            return View();
+            return View(this.ShowPagedRecords(page));
         }
 
 
@@ -37,7 +37,7 @@ namespace LedgerMVC.Controllers
         }
 
         /*取得分頁的內容*/
-        private /*ChargePaginViewModel*/IPagedList<ChargeItem> ShowPagedRecords(int? currentPageIndex)
+        private IPagedList<ChargeItem> ShowPagedRecords(int? currentPageIndex)
         {
             int pageIndex = currentPageIndex.HasValue ? currentPageIndex.Value - 1 : 0;
             var chargeList = chargeService.ShowRecordsWithPagination(pageIndex);

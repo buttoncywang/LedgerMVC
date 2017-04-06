@@ -1,17 +1,19 @@
-﻿@*@model IEnumerable<LedgerMVC.Models.ChargeItem>*@
+﻿@using MvcPaging
+@model IPagedList<LedgerMVC.Models.ChargeItem>
 @{
     Layout = "";
 }
+<link href="~/Content/Site.css" rel="stylesheet" />
 @helper changeChargeTypeTextColor(string chargeType)
 {
-    if (chargeType.Equals("支出"))
-    {
+if (chargeType.Equals("支出"))
+{
         <p class="text-danger">@chargeType</p>
-    }
-    else
-    {
+}
+else
+{
         <p class="text-info">@chargeType</p>
-    }
+}
 }
 <table id="ChargeList" class="table table-striped">
     <thead>
@@ -24,14 +26,14 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var chargeItem in Model.ChargeItems)
+        @foreach (var chargeItem in Model)
         {
             <tr>
                 <td>@chargeItem.ChargeRecordId</td>
                 @*<td>@chargeItem.ChargeType</td>*@
                 <td>@changeChargeTypeTextColor(@chargeItem.ChargeType)</td>
                 <!--日期 TO String-->
-                <td>@chargeItem.ChargeDate.ToString("yyyy-MM-dd")</td>
+                <td>@Html.DisplayFor(d=> chargeItem.ChargeDate)   @*@chargeItem.ChargeDate.ToString("yyyy-MM-dd")*@</td>
                 <!--Int to Currency String-->
                 <td>NT$ @chargeItem.ChargePrice.ToString("#,###")</td>
                 <td>
@@ -44,18 +46,7 @@
     </tbody>
 </table>
 <!--實作分頁功能-->
-<nav aria-label="Page navigation example">
-    <ul id="LedgerPagnation" class="pagination">
-        @for (int i = 1; i <= Model.TotalPages; i++)
-            {
-                if (i == Model.CurrentPageIndex)
-                {
-                <li class="page-item active"><a class="page-link" href="">@i</a></li>
-            }
-            else
-            {
-                <li class="page-item"><a class="page-link">@i</a></li>
-            }
-        }
-    </ul>
-</nav>
+<div class="pagination pager">
+    @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
+    Displaying @Model.ItemStart - @Model.ItemEnd of @Model.TotalItemCount item(s)
+</div>

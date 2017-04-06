@@ -1,6 +1,5 @@
 ﻿@using System.Web.Services.Description
 @using MvcPaging
-@*@model LedgerMVC.Models.ChargePaginViewModel*@
 @model IPagedList<LedgerMVC.Models.ChargeItem>
 @{
     Layout = "";
@@ -52,26 +51,3 @@ else
     @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
     Displaying @Model.ItemStart - @Model.ItemEnd of @Model.TotalItemCount item(s)
 </div>
-
-
-
-
-
-@*<nav aria-label="Page navigation example">
-    <ul id="LedgerPagnation" class="pagination">
-        @for (int i = 1; i <= Model.TotalPages; i++)
-        {
-            if (i == Model.CurrentPageIndex)
-            {
-                <li class="page-item active"><a class="page-link" href="">@i</a></li>
-            }
-            else
-            {
-                <li class="page-item"><a class="page-link">@i</a></li>
-            }
-        }
-    </ul>
-</nav>*@
-@*@section scripts{
-    @Scripts.Render("~/Scripts/CommScripts.js")
-}*@

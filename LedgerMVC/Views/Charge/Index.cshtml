@@ -1,16 +1,8 @@
-﻿@model LedgerMVC.Models.ChargePaginViewModel
+﻿@model IPagedList<LedgerMVC.Models.ChargeItem>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>我的記帳簿</h2>
-@*@Html.Partial("_AddCharge")*@
-@*@Html.Action("AddCharge")*@
-<hr/>
-@*@Html.Partial("_ChargeMoney",Model)*@
-@Html.Action("ChargeMoney")
-<!--使用ajax的方式取得分頁內容-->
-@section scripts{
-   @Scripts.Render("~/Scripts/CommScripts.js")
-}
+@Html.Partial("_ChargeMoney",Model)

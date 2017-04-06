@@ -1,0 +1,15 @@
+﻿@model DateTime?
+@{
+
+    //var value = Model?.ToString("yyyy-MM-dd HH:mm") ?? "";
+
+    var value = Model.HasValue
+    ? Model.Value.ToString("yyyy-MM-dd HH:mm")
+    : "";
+}
+@Html.TextBox("", value, new
+{
+    @class = "form-control",
+    data_datetimepicker = "y",
+    data_date_format = "YYYY-MM-dd HH:mm",
+})

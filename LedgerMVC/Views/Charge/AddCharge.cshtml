@@ -2,7 +2,6 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="well">
     @using (Ajax.BeginForm("AddCharge",null, new AjaxOptions { UpdateTargetId = "ChargeList" }, new { @class = "form-horizontal" }))
     {
@@ -22,14 +21,15 @@
         <div class="form-group">
             <label for="ChargePrice" class="col-sm-2 control-label">金額</label>
             <div class="col-sm-10">
-                @Html.TextBoxFor(model => model.ChargePrice, new { htmlAttributes = new { @class = "form-control", PlaceHolder = "金額" } })
+                @Html.EditorFor(d=>d.ChargePrice)
                 @Html.ValidationMessageFor(model => model.ChargePrice)
             </div>
         </div>
         <div class="form-group">
             <label for="ChargeDate" class="col-sm-2 control-label">日期</label>
             <div class="col-sm-10">
-                @Html.TextBoxFor(model => model.ChargeDate, new { htmlAttribute = new { @class = "form-control",@readonly = "readonly"}})
+                @Html.EditorFor(d => d.ChargeDate)
+                @*@Html.TextBoxFor(model => model.ChargeDate, new {htmlAttribute = new {@class = "form-control", @readonly = "readonly"}})*@
                 @Html.ValidationMessageFor(model => model.ChargeDate)
             </div>
         </div>
@@ -50,6 +50,6 @@
 
 <hr/>
 @Html.Action("ChargeMoney")
-@section scripts{
+@*@section scripts{
     @Scripts.Render("~/Scripts/CommScripts.js")
-}
+}*@

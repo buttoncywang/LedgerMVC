@@ -20,8 +20,9 @@ namespace LedgerMVC.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        //DefaultConnection
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("ModelCharge", throwIfV1Schema: false)
         {
         }
 

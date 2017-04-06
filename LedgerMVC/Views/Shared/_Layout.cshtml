@@ -7,6 +7,7 @@
     <title>我的記帳本</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -42,5 +43,11 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/jquery-ui-1.12.1.min.js")
     @RenderSection("scripts", required: false)
+    <script src="~/Scripts/jquery.datetimepicker.js"></script>
+    <script>
+        $(function() {
+            $("[datetimepicker]").datetimepicker();
+        });
+    </script>
 </body>
 </html>
