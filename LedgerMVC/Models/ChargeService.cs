@@ -21,10 +21,24 @@ namespace LedgerMVC.Models
         //    _db = new ModelCharge();
         //}
 
-        public ChargeService(IUnitOfWork UnitOfWork)
+        public ChargeService(IUnitOfWork unitOfWork)
         {
-            _unitWork = UnitOfWork;
-            _accountBookRep = new Repository<AccountBook>(UnitOfWork);
+            _unitWork = unitOfWork;
+            _accountBookRep = new Repository<AccountBook>(unitOfWork);
+        }
+
+        public void DeleteRecord(Guid id)
+        {
+            _accountBookRep.RemoveRecord(GetSingleRecord(id));
+        }
+
+        public void UpdateRecord(ChargeItem chargeItem,Guid id)
+        {
+            var unUpdateRecord = _accountBookRep.GetSingleRecord(d => d.Id == id);
+            unUpdateRecord.Amounttt = chargeItem.ChargePrice;
+            unUpdateRecord.Dateee = chargeItem.ChargeDate;
+            unUpdateRecord.Remarkkk = chargeItem.Memo;
+            unUpdateRecord.Categoryyy = chargeItem.ChargeType == "支出" ? 0 : 1;
         }
 
         /*顯示全部資料(無分頁)*/
@@ -41,6 +55,20 @@ namespace LedgerMVC.Models
             return this.MappingModel(accountBookRecordsBySearch); ;
         }
 
+        private AccountBook MappingModel(ChargeItem chargeItem)
+        {
+            var accountBookRecord = new AccountBook()
+            {
+                Dateee = chargeItem.ChargeDate,
+                Amounttt = chargeItem.ChargePrice,
+                Categoryyy = chargeItem.ChargeType=="支出" ? 0:1,
+                Remarkkk =chargeItem.Memo,
+                Id = chargeItem.RecordGuid
+            };
+            return accountBookRecord;
+        }
+
+        
 
         private List<ChargeItem> MappingModel(List<AccountBook> dbRecords) {
             var modelRecords = new List<ChargeItem>();
@@ -56,21 +84,22 @@ namespace LedgerMVC.Models
                     chargeItem.ChargeType = "收入";
                 chargeItem.Memo = accountBookRecord.Remarkkk;
                 chargeItem.ChargeRecordId = ++sn;
+                chargeItem.RecordGuid = accountBookRecord.Id;
                 modelRecords.Add(chargeItem);
             }
             return modelRecords;
         }
 
-        public AccountBook GetSingleRecord(Guid LedgerItemID)
+        public AccountBook GetSingleRecord(Guid ledgerItemId)
         {
-            return _accountBookRep.GetSingleRecord(d => d.Id == LedgerItemID);
+            return _accountBookRep.GetSingleRecord(d => d.Id == ledgerItemId);
         }
 
         public List<ChargeItem> ShowRecordsWithPagination(int currentPage)
         {
             var accountBookRecords = _accountBookRep.ShowPaginationRecords(d => d.Dateee).ToList();
-            var ChargeItems = this.MappingModel(accountBookRecords);
-            return ChargeItems;
+            var chargeItems = this.MappingModel(accountBookRecords);
+            return chargeItems;
         }
 
         public void AddNewAccountRecord(ChargeItem chargeRecord)

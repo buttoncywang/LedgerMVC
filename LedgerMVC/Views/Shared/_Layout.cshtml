@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的記帳本</title>
     @Styles.Render("~/Content/css")
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
 
@@ -23,9 +24,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("首頁", "Index", "Charge")</li>
-                    <li>@Html.ActionLink("新增紀錄", "AddCharge", "Charge")</li>
-                    <li>@Html.ActionLink("連絡方式", "Contact", "Home")</li>
+                    <li><a href="@Url.Action("Index", "Charge",new {area=""})">首頁</a></li>
+                    <li><a href="@Url.Action("AddCharge", "Charge",new {area=""})">新增紀錄</a></li>
+                    <li><a href=@Url.Action("Index", "Admin", new { area = "Admin" })>管理者</a></li>
                 </ul>
                 @Html.Partial("~/Views/Shared/_LoginPartial.cshtml")
             </div>
@@ -46,7 +47,7 @@
     <script src="~/Scripts/jquery.datetimepicker.js"></script>
     <script>
         $(function() {
-            $("[datetimepicker]").datetimepicker();
+            $("[data-datetimepicker]").datetimepicker();
         });
     </script>
 </body>

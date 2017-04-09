@@ -24,5 +24,6 @@ namespace LedgerMVC.Models
         public DateTime ChargeDate { get; set; }
 
         public int? ChargeRecordId { get; set; }
+        public Guid RecordGuid { get; set; }
     }
 }

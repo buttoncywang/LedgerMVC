@@ -4,5 +4,89 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@Html.Partial("~/Views/Charge/_ChargeMoney.cshtml",Model)
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+@helper changeChargeTypeTextColor(string chargeType)
+{
+if (chargeType.Equals("支出"))
+{
+        <p class="text-danger">@chargeType</p>
+}
+else
+{
+        <p class="text-info">@chargeType</p>
+}
+}
+<table id="ChargeList" class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>類別</th>
+            <th>日期</th>
+            <th>金額</th>
+            <th>備註</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var chargeItem in Model)
+        {
+            <tr>
+                <td style="display: none">@chargeItem.RecordGuid</td>
+                <td>@chargeItem.ChargeRecordId</td>
+                @*<td>@chargeItem.ChargeType</td>*@
+                <td>@chargeItem.ChargeType</td>
+                <!--日期 TO String-->
+                <td>@Html.DisplayFor(Model => @chargeItem.ChargeDate, "DateTime")</td>
+                <!--Int to Currency String-->
+                <td>@Html.DisplayFor(Model => @chargeItem.ChargePrice, "Int") </td>
+                <td>
+                    <textarea cols="50" rows="5">
+                        @chargeItem.Memo
+                    </textarea>
+                </td>
+                <td>
+                    @Html.ActionLink("更新", "EditRecord", "Admin", new { id = chargeItem.RecordGuid }, new { @class = "updateRecord btn-sm btn-primary"})
+                    @Html.ActionLink("刪除", "DeleteRecord", "Admin", new { id = chargeItem.RecordGuid }, new { @class = "delRecord btn-sm btn-primary"})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<!--實作分頁功能-->
+<div class="pagination pager">
+    @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount)
+    Displaying @Model.ItemStart - @Model.ItemEnd of @Model.TotalItemCount item(s)
+</div>
 
+<div class="modal hide fade in" id="updateRecord">
+    <div id="edit-record-container"></div>
+</div>
+
+<div class="modal hide fade in" id="delRecord">
+    <div id="del-record-container"></div>
+</div>
+@section scripts
+{
+ <script type="text/javascript">
+    $(document).ready(function () {
+        $('.updateRecord').click(function () {
+            var url = "/Admin/EditRecord"; // the url to the controller
+            var id = $(this).attr('data-id'); // the id that's given to each button in the list
+            $.get(url + '/' + id, function (data) {
+                $('#edit-record-container').html(data);
+                $('#updateRecord').modal('show');
+            });
+        });
+
+        $('.delRecord').click(function () {
+            var url = "/Admin/EditRecord"; // the url to the controller
+            var id = $(this).attr('data-id'); // the id that's given to each button in the list
+            $.get(url + '/' + id, function (data) {
+                $('#del-record-container').html(data);
+                $('#delRecord').modal('show');
+            });
+        });
+     });
+</script>   
+}

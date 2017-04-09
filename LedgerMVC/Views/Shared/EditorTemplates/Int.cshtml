@@ -1,0 +1,9 @@
+﻿@model Int32?
+@{
+    var value=Model.HasValue ? Model.ToString() : "";
+}
+@Html.TextBox("", value, new
+{
+    @class = "form-control",
+    type="number"
+})

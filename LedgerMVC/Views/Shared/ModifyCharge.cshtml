@@ -23,6 +23,7 @@ else
             <th>日期</th>
             <th>金額</th>
             <th>備註</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -33,7 +34,7 @@ else
                 @*<td>@chargeItem.ChargeType</td>*@
                 <td>@changeChargeTypeTextColor(@chargeItem.ChargeType)</td>
                 <!--日期 TO String-->
-                <td>@Html.DisplayFor(d => chargeItem.ChargeDate) @*@chargeItem.ChargeDate.ToString("yyyy-MM-dd")*@</td>
+                <td>@chargeItem.ChargeDate.ToString("yyyy-MM-dd")</td>
                 <!--Int to Currency String-->
                 <td>NT$ @chargeItem.ChargePrice.ToString("#,###")</td>
                 <td>
@@ -41,7 +42,10 @@ else
                         @chargeItem.Memo
                     </textarea>
                 </td>
-                <td style="display:none">@chargeItem.RecordGuid</td>
+                <td>
+                    @Ajax.ActionLink("Update", "UpdateChargeItem","Admin", new { chargeItem=Model}, new AjaxOptions { HttpMethod = "PUT" })
+                    @Ajax.ActionLink("Delete", "DeleteChargeItem", "Admin", new { chargeItem = Model }, new AjaxOptions { HttpMethod = "DELETE" })
+                </td>
             </tr>
         }
     </tbody>

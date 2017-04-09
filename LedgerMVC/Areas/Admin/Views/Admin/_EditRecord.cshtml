@@ -1,0 +1,55 @@
+﻿@model LedgerMVC.Models.ChargeItem
+<!--Update Modal-->
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+            @using (Html.BeginForm("EditRecord", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    @Html.LabelFor(d => d.ChargeType, new { @class = "col-sm-2 control-label" })
+                    @Html.HiddenFor(d=>d.RecordGuid)
+                    <div class="col-sm-10">
+                       @Html.DropDownListFor(d => d.ChargeType,
+                           new List<SelectListItem> {
+                                new SelectListItem { Value = "0" , Text = "支出" },
+                                new SelectListItem { Value = "1" , Text = "收入" },
+                            },
+                            new { @class = "form-control" })
+                        @Html.ValidationMessageFor(d => d.ChargeType, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(d => d.ChargePrice, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.EditorFor(d => d.ChargePrice, new { htmlAttributes = new { @class = "form-control", placeholder = "金額" } })
+                        @Html.ValidationMessageFor(d => d.ChargePrice, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(d => d.ChargeDate, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.EditorFor(d => d.ChargeDate, "DateTime")
+                        @Html.ValidationMessageFor(d => d.ChargeDate, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(d => d.Memo, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.EditorFor(d => d.Memo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(d => d.Memo, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-8 col-sm-4">
+                        <button type="submit" class="btn btn-default">更新</button>
+                    </div>
+                </div>
+            }
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
