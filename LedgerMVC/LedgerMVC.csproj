@@ -253,8 +253,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\EditRecord.cshtml" />
-    <Content Include="Areas\Admin\Views\Admin\DeleteRecord.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\_EditRecord.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\_DeleteRecord.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

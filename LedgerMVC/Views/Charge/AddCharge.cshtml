@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="well">
-    @using (Ajax.BeginForm("AddCharge",null, new AjaxOptions { UpdateTargetId = "ChargeList" }, new { @class = "form-horizontal" }))
+    @using (Html.BeginForm("AddCharge","Charge",FormMethod.Post, new { @class = "form-horizontal" }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)
@@ -11,9 +11,10 @@
             <label for="ChargeType" class="col-sm-2 control-label">類別</label>
             <div class="col-sm-10">
                 @Html.DropDownListFor(model => model.ChargeType,
-                    new List<SelectListItem> {
-                        new SelectListItem { Value = "0" , Text = "支出" },
-                        new SelectListItem { Value = "1" , Text = "收入" },
+                    new List<SelectListItem>
+                    {
+                        new SelectListItem {Value = "0", Text = "支出"},
+                        new SelectListItem {Value = "1", Text = "收入"},
                     },
                     new { @class = "form-control" })
             </div>
@@ -21,7 +22,7 @@
         <div class="form-group">
             <label for="ChargePrice" class="col-sm-2 control-label">金額</label>
             <div class="col-sm-10">
-                @Html.EditorFor(d=>d.ChargePrice)
+                @Html.EditorFor(d => d.ChargePrice)
                 @Html.ValidationMessageFor(model => model.ChargePrice)
             </div>
         </div>
@@ -29,7 +30,6 @@
             <label for="ChargeDate" class="col-sm-2 control-label">日期</label>
             <div class="col-sm-10">
                 @Html.EditorFor(d => d.ChargeDate)
-                @*@Html.TextBoxFor(model => model.ChargeDate, new {htmlAttribute = new {@class = "form-control", @readonly = "readonly"}})*@
                 @Html.ValidationMessageFor(model => model.ChargeDate)
             </div>
         </div>

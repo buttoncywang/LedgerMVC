@@ -31,10 +31,10 @@ namespace LedgerMVC.Controllers
         }
 
         /*回傳分頁的資訊(JSON)*/
-        public ActionResult ShowPagedChargeRecords(int currentPageIndex)
-        {
-            return Json(ShowPagedRecords(currentPageIndex), JsonRequestBehavior.AllowGet);
-        }
+        //public ActionResult ShowPagedChargeRecords(int currentPageIndex)
+        //{
+        //    return Json(ShowPagedRecords(currentPageIndex), JsonRequestBehavior.AllowGet);
+        //}
 
         /*取得分頁的內容*/
         private IPagedList<ChargeItem> ShowPagedRecords(int? currentPageIndex)
@@ -49,6 +49,7 @@ namespace LedgerMVC.Controllers
         {
             return View();
         }
+
         [Authorize(Roles = "Normal_User,Admin_User")]
         [HttpPost]
         public ActionResult AddCharge(ChargeItem chargeItem)
